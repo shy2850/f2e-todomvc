@@ -1,0 +1,27 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "globals": {
+        "require": true,
+        "define": true,
+        "$require": true
+    },
+    "extends": [
+        "standard"
+    ],
+    "plugins": [
+        "standard",
+        "promise",
+        "react"
+    ],
+    "rules": {
+        "indent": ["error", 4],
+        "no-console": "warn",
+        "no-unused-vars": "off",
+        "camelcase": "off",
+        "no-useless-escape": "off"
+    }
+}
