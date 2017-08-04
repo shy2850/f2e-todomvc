@@ -7,8 +7,7 @@
     "start": "./node_modules/.bin/f2e start",
     "lint": "./node_modules/.bin/eslint --ext .jsx src/ --fix",
     "test": "echo no test!",
-    "build": "npm run lint & ./node_modules/.bin/f2e build",
-    "deploy": "cd ./dist & git add --a & git commit -m 'deploy' & git push origin gh-pages"
+    "build": "npm run lint & ./node_modules/.bin/f2e build"
   },
   "repository": {
     "type": "git",

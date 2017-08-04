@@ -7,10 +7,10 @@ import reducer, {routerMiddleware, CHANGE_FILTER, storeMiddleware} from './reduc
 import {TodoAppContainer} from './components/TodoApp'
 
 const createStoreDevTools = compose(
-    window.devToolsExtension ? window.devToolsExtension() : f => f,
     // search-router-middleware
     applyMiddleware(routerMiddleware),
-    applyMiddleware(storeMiddleware)
+    applyMiddleware(storeMiddleware),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore)
 const store = createStoreDevTools(reducer)
 store.dispatch({

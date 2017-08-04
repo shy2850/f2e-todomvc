@@ -82,8 +82,7 @@ const {
     }
 } = window
 export const CHANGE_FILTER = 'CHANGE_FILTER'
-export const routerMiddleware = () => next => state => {
-    let {action = {}} = state
+export const routerMiddleware = () => next => action => {
     switch (action.type) {
     case CHANGE_FILTER:
         if (!action.filter) {
@@ -92,12 +91,11 @@ export const routerMiddleware = () => next => state => {
         }
         history.pushState(null, title, pathname + `?filter=${action.filter}`)
     }
-    return next(state)
+    return next(action)
 }
 export const storeMiddleware = ({getState}) => next => action => {
     setTimeout(function () {
-        let states = getState().computedStates
-        let state = states[states.length - 1].state
+        let state = getState()
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.get('todos').toJS()))
     }, 0)
     return next(action)
