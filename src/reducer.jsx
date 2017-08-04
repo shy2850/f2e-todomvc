@@ -6,10 +6,6 @@ function findItemIndex (state, itemId) {
     )
 }
 
-function setState (state, newState) {
-    return state.merge(newState)
-}
-
 function toggleComplete (state, itemId) {
     const itemIndex = findItemIndex(state, itemId)
     const updatedItem = state.get('todos')
@@ -73,13 +69,51 @@ function deleteItem (state, itemId) {
     )
 }
 
-export default function (state = Map(), action) {
+const STORAGE_KEY = '_STORAGE_KEY_'
+const {
+    history,
+    location: {
+        pathname,
+        search
+    },
+    localStorage,
+    document: {
+        title
+    }
+} = window
+export const CHANGE_FILTER = 'CHANGE_FILTER'
+export const routerMiddleware = () => next => action => {
     switch (action.type) {
-    case 'SET_STATE':
-        return setState(state, action.state)
+    case CHANGE_FILTER:
+        if (!action.filter) {
+            let filter = window.location.search.match(/\?filter=(\w+)/)
+            action.filter = filter ? filter[1] : 'all'
+        }
+        history.pushState(null, title, pathname + `?filter=${action.filter}`)
+    }
+    return next(action)
+}
+export const storeMiddleware = ({getState}) => next => action => {
+    setTimeout(function () {
+        let state = getState()
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.get('todos').toJS()))
+    }, 0)
+    return next(action)
+}
+const store = localStorage.getItem(STORAGE_KEY)
+const initState = Map().merge({
+    todos: store ? JSON.parse(store) : [
+        {id: 1, text: 'React', status: 'active', editing: false},
+        {id: 2, text: 'Redux', status: 'active', editing: false},
+        {id: 3, text: 'Immutable', status: 'active', editing: false}
+    ],
+    filter: 'all'
+})
+export default function (state = initState, action) {
+    switch (action.type) {
     case 'TOGGLE_COMPLETE':
         return toggleComplete(state, action.itemId)
-    case 'CHANGE_FILTER':
+    case CHANGE_FILTER:
         return changeFilter(state, action.filter)
     case 'EDIT_ITEM':
         return editItem(state, action.itemId)
