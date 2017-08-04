@@ -82,31 +82,33 @@ const {
     }
 } = window
 export const CHANGE_FILTER = 'CHANGE_FILTER'
-export const routerMiddleware = () => next => action => {
+export const routerMiddleware = () => next => state => {
+    let {action} = state
     switch (action.type) {
     case CHANGE_FILTER:
         if (!action.filter) {
-            let filter = window.location.search.match(/\?filter=(\w+)/)
+            let filter = search.match(/\?filter=(\w+)/)
             action.filter = filter ? filter[1] : 'all'
         }
         history.pushState(null, title, pathname + `?filter=${action.filter}`)
     }
-    return next(action)
+    return next(state)
 }
 export const storeMiddleware = ({getState}) => next => action => {
     setTimeout(function () {
-        let state = getState()
+        let states = getState().computedStates
+        let state = states[states.length - 1].state
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state.get('todos').toJS()))
     }, 0)
     return next(action)
 }
-const store = localStorage.getItem(STORAGE_KEY)
+const store = localStorage.getItem(STORAGE_KEY) || JSON.stringify([
+    {id: 1, text: 'React', status: 'active', editing: false},
+    {id: 2, text: 'Redux', status: 'active', editing: false},
+    {id: 3, text: 'Immutable', status: 'active', editing: false}
+])
 const initState = Map().merge({
-    todos: store ? JSON.parse(store) : [
-        {id: 1, text: 'React', status: 'active', editing: false},
-        {id: 2, text: 'Redux', status: 'active', editing: false},
-        {id: 3, text: 'Immutable', status: 'active', editing: false}
-    ],
+    todos: JSON.parse(store) || [],
     filter: 'all'
 })
 export default function (state = initState, action) {

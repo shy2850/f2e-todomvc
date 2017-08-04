@@ -4,3 +4,6 @@ A TodoMVC written with React, Redux and Immutable
 # run
 1. `npm i`
 2. `npm start`
+
+# view
+[https://shy2850.github.io/f2e-todomvc](https://shy2850.github.io/f2e-todomvc/)
