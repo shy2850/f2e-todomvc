@@ -83,7 +83,7 @@ const {
 } = window
 export const CHANGE_FILTER = 'CHANGE_FILTER'
 export const routerMiddleware = () => next => state => {
-    let {action} = state
+    let {action = {}} = state
     switch (action.type) {
     case CHANGE_FILTER:
         if (!action.filter) {
