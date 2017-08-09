@@ -4,8 +4,8 @@
   "description": "A TodoMVC written with React, Redux and Immutable",
   "main": "index.html",
   "scripts": {
-    "start": "./node_modules/.bin/f2e start",
-    "lint": "./node_modules/.bin/eslint --ext .jsx src/ --fix",
+    "start": "f2e start",
+    "lint": "eslint --ext .jsx src/ --fix",
     "test": "echo no test!",
     "build": "npm run lint & ./node_modules/.bin/f2e build"
   },
