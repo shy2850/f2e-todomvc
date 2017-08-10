@@ -26,7 +26,7 @@ module.exports = {
      * 是否支持 gzip
      * @type {Boolean}
      */
-    // gzip: true,
+    gzip: true,
 
     /**
      * 支持中间件列表, 默认添加的系统中间件后面, build之前
@@ -58,7 +58,7 @@ module.exports = {
      */
     bundles: [
         {
-            test: /^src\/(?!require\.js).*?$/,
+            test: /^src\/(?!(require|index)\.js).*?$/,
             dist: 'src/index.js'
         }
     ],
