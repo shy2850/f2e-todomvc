@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "amd",
+        "jsx": "react"
+    },
+    "include": ["src/**.jsx"],
+    "exclude": ["node_modules","bower_components","jspm_packages"]
+}

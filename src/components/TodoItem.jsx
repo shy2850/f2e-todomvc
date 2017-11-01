@@ -1,6 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import TextInput from './TextInput'
-import classNames from 'classnames'
+import * as ClassNames from 'classnames'
+const classNames = typeof ClassNames === 'function' ? ClassNames : ClassNames['default']
 
 export default class TodoItem extends React.Component {
     render () {

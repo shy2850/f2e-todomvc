@@ -1,10 +1,11 @@
+const { argv } = process
+const build = argv[argv.length - 1] === 'build'
+
+const useTypescript = argv[argv.length - 1] === 'ts'
+
 module.exports = {
     // host: 'f2e.local.cn',
-    /**
-     * 是否开启自动刷新
-     * @type {Boolean}
-     */
-    livereload: true,
+    livereload: !build,
     /**
      * 使用 less 编译为css, 使用 less 配置
      * @type {Object}
@@ -14,7 +15,7 @@ module.exports = {
      * 支持babel编译 js/es/jsx, 支持 `.babelrc` 配置,
      * @type {Object}
      */
-    useBabel: {
+    useBabel: useTypescript ? false : {
         only: '**.jsx',
         presets: ['es2015', 'react'],
         plugins: ['babel-plugin-transform-es2015-modules-amd'],
@@ -38,6 +39,10 @@ module.exports = {
      * @type {Array<Function>}
      */
     middlewares: [
+        useTypescript && {
+            middleware: 'typescript',
+            getModuleId: pathname => pathname.replace('src\/', '')
+        },
         {
             test: /\.(html|js)$/,
             middleware: 'template'

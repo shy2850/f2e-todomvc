@@ -1,6 +1,6 @@
-import React from 'react'
-import classNames from 'classnames'
-
+import * as React from 'react'
+import * as ClassNames from 'classnames'
+const classNames = typeof ClassNames === 'function' ? ClassNames : ClassNames['default']
 export default class TodoTools extends React.Component {
     getNbItemsLeft () {
         return this.props.nbActiveItems || 0

@@ -109,7 +109,7 @@ const initState = Map().merge({
     todos: JSON.parse(store) || [],
     filter: 'all'
 })
-export default function (state = initState, action) {
+export default function (state = initState, action = {}) {
     switch (action.type) {
     case 'TOGGLE_COMPLETE':
         return toggleComplete(state, action.itemId)

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 export default class TodoHeader extends React.Component {
     _handleKeyPress (e) {
