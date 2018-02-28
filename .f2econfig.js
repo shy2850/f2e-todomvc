@@ -2,6 +2,7 @@ const { argv } = process
 const build = argv[argv.length - 1] === 'build'
 
 const useTypescript = argv[argv.length - 1] === 'ts'
+const getModuleId = pathname => pathname.replace(/^[\\/]?src\//, '')
 
 module.exports = {
     // host: 'f2e.local.cn',
@@ -11,6 +12,7 @@ module.exports = {
      * @type {Object}
      */
     useLess: true,
+    getModuleId,
     /**
      * 支持babel编译 js/es/jsx, 支持 `.babelrc` 配置,
      * @type {Object}
@@ -18,9 +20,7 @@ module.exports = {
     useBabel: useTypescript ? false : {
         only: '**.jsx',
         presets: ['es2015', 'react'],
-        plugins: ['babel-plugin-transform-es2015-modules-amd'],
-        moduleIds: true,
-        getModuleId: pathname => pathname.replace(/^[\\/]?src\//, '')
+        plugins: ['babel-plugin-transform-es2015-modules-amd']
     },
     include: /\$require\(["'\s]*([^"'\s]+)["'\s]*\)/g,
     /**
@@ -40,8 +40,7 @@ module.exports = {
      */
     middlewares: [
         useTypescript && {
-            middleware: 'typescript',
-            getModuleId: pathname => pathname.replace('src\/', '')
+            middleware: 'typescript'
         },
         {
             test: /\.(html|js)$/,
